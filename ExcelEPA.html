@@ -52,7 +52,8 @@
                                                                                                 <li>5.	You can just run all of this code, and this codes will add all the data and necessary information into your empty EPA format excel.</li>
 											</ul>
 									<!-- Preformatted Code -->
-									<h3>Preformatted</h3>
+									<h3>Codes</h3>
+									<p>First, we will import all useful library in our codes. We will use both pandas and openpyxl to write our EPA excel file, and then we open our worksheet as well as the excel containing your water quality data.<p>
 									<pre><code>import pandas as pd
 import openpyxl
 from openpyxl import load_workbook
@@ -88,7 +89,7 @@ EPA_format= pd.read_excel(path_workbook)
 EPA_format_results = pd.read_excel(path_workbook, sheet_name='Results')
 EPA_format_results
 </code></pre>
-									<p>Start putting all of your data into EPA format excel<p>
+									<p>Second, we will start putting all of your data into our data frame.<p>
 									<pre><code>EPA_MonitoringID = []
 for i in range (0,len(df['Site'])):
     Data = (df['Site'][i])
@@ -148,8 +149,199 @@ for i in range (0,(len(EPA_format_results['Monitoring Location ID']))):
     else:
         EPA_format_results['Characteristic Name'][i] = 'Nitrate+Nitrite'
 </code></pre>
+									<p>Then, we will write the remaining necessary column based on your data.<p>
+                                                                        <pre><code>for i in range (0,len(EPA_format_results ['Characteristic Name'])):
+    if (EPA_format_results['Characteristic Name'][i]) == 'Ammonia-nitrogen' :
+        EPA_format_results['Method Speciation'][i] = 'as N'
+    elif(EPA_format_results['Characteristic Name'][i]) == 'Nitrate+Nitrite' :
+        EPA_format_results['Method Speciation'][i] = 'as N'
+    elif(EPA_format_results['Characteristic Name'][i]) == 'Total Nitrogen, mixed forms' :
+        EPA_format_results['Method Speciation'][i] = 'as N'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Soluble Reactive Phosphorus (SRP)':
+        EPA_format_results['Method Speciation'][i] = 'as P'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Phosphorus, mixed forms':
+        EPA_format_results['Method Speciation'][i] = 'as P'
+    else:
+        EPA_format_results['Method Speciation'][i] = ''
+	
+ResultUnit = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = Result_unit
+    ResultUnit.append(Data)
 
-                                                                        									
+EPA_format_results['Result Unit'] = ResultUnit
+
+ProjectID = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = Project_ID
+    ProjectID.append(Data)
+ProjectID
+
+EPA_format_results['Project ID'] = ProjectID
+
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    if (EPA_format_results['Characteristic Name'][i]) == 'Ammonia-nitrogen':
+        EPA_format_results['Result Sample Fraction'][i] = 'Non-volatile'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Soluble Reactive Phosphorus (SRP)':
+        EPA_format_results['Result Sample Fraction'][i] = 'Filtered,lab'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Nitrate+Nitrite':
+        EPA_format_results['Result Sample Fraction'][i] = 'Inorganic'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Nitrogen, mixed forms':
+        EPA_format_results['Result Sample Fraction'][i] = 'Total'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Phosphorus, mixed forms':
+        EPA_format_results['Result Sample Fraction'][i] = 'Total'
+    else:
+        EPA_format_results['Result Sample Fraction'][i] = ''
+
+Result_status = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'Final'
+    Result_status.append(Data)
+Result_status
+
+EPA_format_results['Result Status ID'] = Result_status
+
+Result_type = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'Actual'
+    Result_type.append(Data)
+Result_type
+
+EPA_format_results['Result Value Type'] = Result_type
+
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    if (EPA_format_results['Characteristic Name'][i]) == 'Ammonia-nitrogen':
+        EPA_format_results['Result Analytical Method Context'][i] = 'USEPA'
+    elif (EPA_format_results['Characteristic Name'][i]) == 'Soluble Reactive Phosphorus (SRP)':
+        EPA_format_results['Result Analytical Method Context'][i] = 'USEPA'
+    elif (EPA_format_results['Characteristic Name'][i]) == 'Nitrate+Nitrite':
+        EPA_format_results['Result Analytical Method Context'][i] = 'USEPA'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Nitrogen, mixed forms':
+        EPA_format_results['Result Analytical Method Context'][i] = 'HACH'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Suspended Solids':
+        EPA_format_results['Result Analytical Method Context'][i] = 'APHA'
+    else:
+        EPA_format_results['Result Analytical Method Context'][i] = 'USEPA'
+	
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    if (EPA_format_results['Characteristic Name'][i]) == 'Ammonia-nitrogen':
+        EPA_format_results['Result Analytical Method ID'][i] = '350.1'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Soluble Reactive Phosphorus (SRP)':
+        EPA_format_results['Result Analytical Method ID'][i] = '365.1'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Phosphorus, mixed forms':
+        EPA_format_results['Result Analytical Method ID'][i] = '365.1'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Nitrate+Nitrite':
+        EPA_format_results['Result Analytical Method ID'][i] = '353.2'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Nitrogen, mixed forms':
+        EPA_format_results['Result Analytical Method ID'][i] = '10071'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Suspended Solids':
+        EPA_format_results['Result Analytical Method ID'][i] = '2540-D'
+    else:
+        EPA_format_results['Result Analytical Method ID'][i] = ''
+
+
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    if (EPA_format_results['Characteristic Name'][i]) == 'Total Suspended Solids':
+        EPA_format_results['Result Detection/Quantitation Limit Type'][i] = ''
+    else:
+        EPA_format_results['Result Detection/Quantitation Limit Type'][i] = 'Method Detection Level'
+
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    if (EPA_format_results['Characteristic Name'][i]) == 'Ammonia-nitrogen':
+        EPA_format_results['Result Detection/Quantitation Limit Measure'][i] = '0.004'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Soluble Reactive Phosphorus (SRP)':
+        EPA_format_results['Result Detection/Quantitation Limit Measure'][i] = '0.002'
+    elif (EPA_format_results['Characteristic Name'][i])==  'Total Phosphorus, mixed forms':
+        EPA_format_results['Result Detection/Quantitation Limit Measure'][i] = '0.003'
+    elif (EPA_format_results['Characteristic Name'][i])==  'Nitrate+Nitrite':
+        EPA_format_results['Result Detection/Quantitation Limit Measure'][i] = '0.003'
+    elif (EPA_format_results['Characteristic Name'][i])== 'Total Nitrogen, mixed forms':
+        EPA_format_results['Result Detection/Quantitation Limit Measure'][i] = '0.12'
+    else:
+        EPA_format_results['Result Detection/Quantitation Limit Measure'][i] = ''
+
+LimitUnit = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = Result_unit
+    LimitUnit.append(Data)
+LimitUnit
+
+EPA_format_results['Result Detection/Quantitation Limit Unit'] = LimitUnit
+
+Activity_Type = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'Sample-Routine'
+    Activity_Type.append(Data)
+Activity_Type
+
+EPA_format_results['Activity Type'] = Activity_Type
+
+Activity_Media = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'Water'
+    Activity_Media.append(Data)
+Activity_Media
+
+EPA_format_results['Activity Media Name'] = Activity_Media
+
+Sample_collection = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'IOWAST_WWQ'
+    Sample_collection.append(Data)
+Sample_collection
+
+EPA_format_results['Sample Collection Method Context'] = Sample_collection
+
+Collection_equipment = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'Water Bottle'
+    Collection_equipment.append(Data)
+Collection_equipment
+
+EPA_format_results['Sample Collection Equipment Name'] = Sample_collection
+
+Collection_ID = []
+for i in range (0,len(EPA_format_results['Monitoring Location ID'])):
+    Data = 'EPA Grant 97753901'
+    Collection_ID.append(Data)
+Collection_ID
+
+EPA_format_results['Sample Collection Method ID'] = Collection_ID
+
+if (EPA_format_results['Characteristic Name'][i]) == 'Ammonia-nitrogen' :
+        ID = 'NH4'
+elif(EPA_format_results['Characteristic Name'][i]) == 'Nitrate+Nitrite' :
+        ID = 'NN'
+elif(EPA_format_results['Characteristic Name'][i]) == 'Total Nitrogen, mixed forms' :
+        ID = 'TN'
+elif (EPA_format_results['Characteristic Name'][i])== 'Soluble Reactive Phosphorus (SRP)':
+        ID ='SRP'
+elif (EPA_format_results['Characteristic Name'][i])== 'Total Phosphorus, mixed forms':
+        ID = 'TP'
+else:
+        ID = 'TSS'
+        
+if (EPA_format_results['Activity Type'][i]) == 'Sample-Routine' :
+        AcID = 'SR'
+else:
+        AcID = 'FM'
+
+if(EPA_format_results['Sample Collection Equipment Name'][i]) == 'Water Bottle' :
+        SamID = 'WB'
+else:
+        SamID ='PS'
+ 
+import datetime
+DateID =[]
+for i in range (0,len(EPA_format_results['Analysis Start Date'])):
+    d = datetime.datetime.strptime(str(EPA_format_results['Analysis Start Date'][i]), '%Y-%m-%d')
+    dateID = datetime.date.strftime(d, "%Y%m%d")
+    DateID.append(dateID)
+    
+y=EPA_format_results['Monitoring Location ID'] 
+EPA_format_results['Activity ID (CHILD-subset)']=y+":"+ DateID +':'+AcID+':'+SamID+':'+ID
+</code></pre>
+ 
 								</section>
 
 						</div>
