@@ -43,6 +43,10 @@
 									
 									<h2>Introduction</h2>
 									<p>This page will discuss the code that can be used for re-formatting your simple water quality excel file into EPA format excel. If you do not have the EPA format excel just yet, you can download it here:<p>
+									<ul class="actions">
+									<li><a href="#" class="button icon solid fa-download">Icon</a></li>
+									<ul>
+										
 									<p>Several conditions should be met before using these codes. Please make sure you read carefully:<p>
                                                                                        <ul class="alt">
 										                <li>1.	Your water quality data should at least include “Site”, “Results”, “Type”, and “Date”. Please change the first column of your data excels into those names, where site is the place where you collect the data, results is the value of your data, type is the type of your data (ex: nitrogen, phosphorus, etc.), and date is the date when your data is collected.</li>
@@ -340,6 +344,15 @@ for i in range (0,len(EPA_format_results['Analysis Start Date'])):
     
 y=EPA_format_results['Monitoring Location ID'] 
 EPA_format_results['Activity ID (CHILD-subset)']=y+":"+ DateID +':'+AcID+':'+SamID+':'+ID
+</code></pre>
+									<p>Finally, we will write our ready dataframe into your empty EPA format excel, using openpyxl.<p>
+                                                                        <pre><code>book = load_workbook(path_workbook)
+writer = pd.ExcelWriter(path_workbook, engine = 'openpyxl', mode='a', Index = False)
+writer.book = book
+
+writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+EPA_format_results.to_excel(writer, 'Results', index=False)
+writer.save()
 </code></pre>
  
 								</section>
