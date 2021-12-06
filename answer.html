@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Excel_EPA</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Editorial</strong> by Rose Tirtalistyani</a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="https://github.com/tirtalistyani" class="icon brands fa-github"><span class="label">Github</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="https://www.instagram.com/roselistyani/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Assignment</h1>
+									</header>
+                                                                        
+									
+									<h2>Answer to Assignment 1</h2>
+                                                                        <h3>Codes</h3>
+                                                                        <pre><code>import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import statsmodels.api as sm
+
+epth_df = depth_df = pd.read_excel(r"U:\downloads\project\Water Depth Data Bunny and Walnut 2016-2020 (1).xlsx",sheet_name = "Results")
+precip_df = pd.read_csv(r"U:\downloads\project\PRISM_ppt_tmin_tmax_stable_4km_20160101_20201231_42.0783_-93.6311.csv")
+
+depth_df = depth_df[['Location', 'Day','Result Value', 'Time']]
+depth_df1 = depth_df[depth_df.Location == 'walnut_p1b']
+
+depth_df ['Depth_max'] = depth_df["Result Value"]*1000
+depth_df = depth_df.groupby(['Result Value','Day']).max()
+
+import datetime
+from datetime import datetime
+
+precip_df['Day']= pd.to_datetime(precip_df['Day'])
+
+merged_data = pd.merge(precip_df, depth_df, how="inner", on=['Day'])
+y= merged_data['Depth_max']
+x= merged_data['ppt (mm)']
+
+model = LinearRegression(fit_intercept=True)
+X = np.array([x]).reshape((-1, 1))
+X.shape
+
+model.fit(X,y)
+print(model.intercept_)
+print(model.coef_)
+
+y_pred= model.predict(X)
+y_pred
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcdefaults()
+fig, ax = plt.subplots()
+plt.scatter (x,y, color = 'purple', s=100, alpha = 0.5)
+plt.plot(X,y_pred, color = "black")
+plt.title ('The relationship between precipitation and pothole water depth')
+plt.xlabel ('Precipitation (mm)')
+plt.ylabel ('Pothole water depth (mm)')
+<code><pre>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="WQuan.html">Pothole water quality</a></li>
+										<li><a href="WQual.html">Pothole water quantity</a></li>
+										<li><a href="linreg.html">Linear Regression Model</a></li>
+										<li>
+											<span class="opener">Codes</span>
+											<ul>
+												<li><a href="ExcelEPA.html">Excel-EPA format</a></li>
+												<li><a href="LNcodes.html">Linear Regression with Python</a></li>
+												
+											</ul>
+										</li>
+										<li><a href="discuss.html">Discussion</a></li>
+										<li><a href="quiz.html">Assignment</a></li>
+										
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p></p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">roset@iastate.edu</a></li>
+										<li class="icon solid fa-home">4326 Elings Hall, Agricultural and Biosystems Engineering, Iowa State University</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+
